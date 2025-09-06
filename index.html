@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>if(AI) - 地域と共に歩む、温かい就労支援</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary-color: #d4822f;
+      --secondary-color: #8b6040;
+      --accent-color: #e8af5c;
+      --warm-orange: #ff9a56;
+      --warm-yellow: #ffd23f;
+      --warm-pink: #ff6b9d;
+      --warm-bg: #fef6ed;
+      --warm-bg-alt: #fff9f3;
+      --warm-bg-gradient: linear-gradient(135deg, #fef6ed 0%, #fff0e6 50%, #fff9f3 100%);
+      --text-dark: #4a3426;
+      --text-light: #7a6456;
+      --card-shadow: 0 8px 32px rgba(139, 96, 64, 0.08);
+      --hover-shadow: 0 20px 60px rgba(212, 130, 47, 0.2);
+      --glow-shadow: 0 0 30px rgba(212, 130, 47, 0.4);
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 70px;
+    }
+
+    body {
+      font-family: 'Noto Sans JP', 'Hiragino Sans', sans-serif;
+      line-height: 1.8;
+      color: var(--text-dark);
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(ellipse at center, transparent 0%, rgba(112, 66, 20, 0.1) 100%);
+      pointer-events: none;
+      z-index: 9999;
+      mix-blend-mode: multiply;
+    }
+
+
+    .hero {
+      min-height: 100vh;
+      margin-top: 0;
+      background-image: url('/Users/takasaki19841121/Desktop/if-ai-site-main/images/toppc.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+      position: relative;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(to bottom,
+        rgba(0, 0, 0, 0.6) 0%,
+        rgba(112, 66, 20, 0.4) 50%,
+        rgba(0, 0, 0, 0.6) 100%);
+      z-index: 1;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 40px;
+      background: linear-gradient(to bottom, 
+        rgba(0, 0, 0, 1) 0%, 
+        rgba(0, 0, 0, 1) 30%,
+        transparent 100%);
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+
+
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.05em;
+      text-shadow: 3px 3px 6px rgba(139, 96, 64, 0.8), 
+                  -1px -1px 2px rgba(139, 96, 64, 0.8),
+                   1px -1px 2px rgba(139, 96, 64, 0.8),
+                  -1px  1px 2px rgba(139, 96, 64, 0.8),
+                   1px  1px 2px rgba(139, 96, 64, 0.8),
+                   0px  0px 10px rgba(139, 96, 64, 0.6);
+    }
+
+    .hero .tagline {
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      margin-bottom: 2rem;
+      opacity: 0.95;
+      text-shadow: 2px 2px 4px rgba(139, 96, 64, 0.8), 
+                  -1px -1px 1px rgba(139, 96, 64, 0.8),
+                   1px -1px 1px rgba(139, 96, 64, 0.8),
+                  -1px  1px 1px rgba(139, 96, 64, 0.8),
+                   1px  1px 1px rgba(139, 96, 64, 0.8);
+    }
+
+    .cta-button {
+      display: inline-block;
+      padding: 1rem 3rem;
+      background: white;
+      color: var(--primary-color);
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(255, 255, 255, 0.3);
+    }
+
+    .cta-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 30px rgba(255, 255, 255, 0.4);
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: transparent;
+      padding: 1rem;
+      z-index: 1000;
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      width: 30px;
+      height: 30px;
+      justify-content: space-around;
+      align-items: center;
+    }
+
+    .hamburger span {
+      display: block;
+      height: 3px;
+      width: 100%;
+      background-color: white;
+      transition: all 0.3s ease;
+      transform-origin: center;
+    }
+
+    .hamburger.active span:nth-child(1) {
+      transform: rotate(45deg) translate(7px, 7px);
+    }
+
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(7px, -7px);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border-radius: 25px;
+      transition: all 0.3s ease;
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(5px);
+    }
+
+    nav a:hover {
+      background: rgba(255, 255, 255, 0.9);
+      color: var(--primary-color);
+    }
+
+    .container {
+      width: 100%;
+      margin: 0;
+      padding: 0 2rem;
+    }
+
+    .content-wrapper {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    section {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      width: 100vw;
+      margin-left: calc(50% - 50vw);
+      padding: 2rem 0;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      border-top: 20px solid #000;
+      border-bottom: 20px solid #000;
+      box-shadow: inset 0 20px 40px -20px rgba(0, 0, 0, 0.8),
+                  inset 0 -20px 40px -20px rgba(0, 0, 0, 0.8);
+    }
+
+    section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(to bottom, 
+        rgba(0, 0, 0, 0.8) 0%, 
+        rgba(0, 0, 0, 0.8) 3%, 
+        rgba(112, 66, 20, 0.35) 3%, 
+        rgba(112, 66, 20, 0.35) 97%, 
+        rgba(0, 0, 0, 0.8) 97%, 
+        rgba(0, 0, 0, 0.8) 100%);
+      z-index: 1;
+    }
+
+    section::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: repeating-linear-gradient(
+        to bottom,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.1) 2px,
+        rgba(0, 0, 0, 0.1) 4px
+      );
+      z-index: 1;
+      pointer-events: none;
+      mix-blend-mode: multiply;
+    }
+
+    section .content-wrapper,
+    section h2 {
+      position: relative;
+      z-index: 2;
+    }
+
+    #overview {
+      background-image: url('/Users/takasaki19841121/Desktop/if-ai-site-main/images/bgpc1.png');
+    }
+
+    #support {
+      background-image: url('/Users/takasaki19841121/Desktop/if-ai-site-main/images/bgpc3.png');
+    }
+
+    #voices {
+      background-image: url('/Users/takasaki19841121/Desktop/if-ai-site-main/images/casepc1.png');
+      transition: background-image 0.8s ease-in-out;
+    }
+
+    #community {
+      background-image: url('/Users/takasaki19841121/Desktop/if-ai-site-main/images/bgpc4.png');
+    }
+
+    #results {
+      background-image: url('/Users/takasaki19841121/Desktop/if-ai-site-main/images/bgpc5.png');
+    }
+
+    section .content-wrapper {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      width: 100%;
+    }
+
+    h2 {
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      color: white;
+      text-align: center;
+      position: absolute;
+      top: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      margin: 0;
+      padding-bottom: 1rem;
+      z-index: 10;
+      text-shadow: 3px 3px 6px rgba(139, 96, 64, 0.8), 
+                  -1px -1px 2px rgba(139, 96, 64, 0.8),
+                   1px -1px 2px rgba(139, 96, 64, 0.8),
+                  -1px  1px 2px rgba(139, 96, 64, 0.8),
+                   1px  1px 2px rgba(139, 96, 64, 0.8),
+                   0px  0px 10px rgba(139, 96, 64, 0.6);
+    }
+
+    h2::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent-color), var(--primary-color));
+      border-radius: 2px;
+    }
+
+    section .content-wrapper {
+      padding-top: 6rem;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .card {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(254, 246, 237, 0.95));
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: var(--card-shadow);
+      transition: box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      box-shadow: var(--hover-shadow);
+    }
+
+    .card h3 {
+      color: var(--secondary-color);
+      margin-bottom: 1rem;
+      font-size: 1.4rem;
+    }
+
+    .card p {
+      color: var(--text-light);
+      line-height: 1.8;
+    }
+
+    .stats-container {
+      margin: 3rem 0;
+      text-align: center;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(120px, 150px));
+      gap: 1.5rem;
+      margin-top: 2rem;
+      justify-content: center;
+    }
+
+    .stat-item {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(254, 246, 237, 0.95));
+      border-radius: 15px;
+      padding: 2rem 1rem;
+      box-shadow: var(--card-shadow);
+    }
+
+    .stat-number {
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      color: var(--text-light);
+      font-size: 1.1rem;
+    }
+
+    .testimonial-carousel {
+      position: relative;
+      max-width: 800px;
+      margin: 3rem auto;
+      overflow: hidden;
+      border-radius: 20px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(254, 246, 237, 0.95));
+      box-shadow: var(--card-shadow);
+    }
+
+    .testimonial-slide {
+      padding: 3rem;
+    }
+
+    .testimonial-slide.active {
+      display: block;
+    }
+
+    .testimonial-slide:not(.active) {
+      display: none;
+    }
+
+    .testimonial-text {
+      font-size: 1.2rem;
+      color: var(--text-dark);
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+      font-style: italic;
+    }
+
+    .testimonial-author {
+      color: var(--secondary-color);
+      font-weight: 600;
+    }
+
+    .carousel-dots {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 1rem;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--text-light);
+      opacity: 0.3;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .dot.active {
+      opacity: 1;
+      background: var(--primary-color);
+      transform: scale(1.2);
+    }
+
+    .partner-logos {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 3rem;
+      margin: 3rem 0;
+    }
+
+    .partner-logo {
+      padding: 2rem;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(254, 246, 237, 0.95));
+      border-radius: 20px;
+      box-shadow: var(--card-shadow);
+      text-align: center;
+    }
+
+    footer {
+      background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+      color: white;
+      padding: 4rem 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+
+    .footer-content {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    .stats-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .stats-header h3 {
+      color: white;
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      text-shadow: 3px 3px 6px rgba(139, 96, 64, 0.8), 
+                  -1px -1px 2px rgba(139, 96, 64, 0.8),
+                   1px -1px 2px rgba(139, 96, 64, 0.8),
+                  -1px  1px 2px rgba(139, 96, 64, 0.8),
+                   1px  1px 2px rgba(139, 96, 64, 0.8),
+                   0px  0px 10px rgba(139, 96, 64, 0.6);
+    }
+
+    .contact-info {
+      margin: 3rem 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .contact-info p {
+      margin: 1rem 0;
+      font-size: 1.1rem;
+    }
+
+    .contact-highlight {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 15px;
+      padding: 2rem;
+      margin: 2rem 0;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+    }
+
+    .contact-highlight h3 {
+      color: white;
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+    }
+
+    .contact-info a {
+      color: white;
+      text-decoration: none;
+      border-bottom: 1px dotted rgba(255, 255, 255, 0.5);
+      transition: border-color 0.3s ease;
+    }
+
+    .contact-info a:hover {
+      border-color: white;
+    }
+
+    .floating-action {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--primary-color);
+      color: white;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(212, 130, 47, 0.3);
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      z-index: 999;
+      font-size: 1.5rem;
+    }
+
+    .floating-action:hover {
+      transform: scale(1.1);
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        background-image: url('/Users/takasaki19841121/Desktop/if-ai-site-main/images/topsp.png');
+      }
+      
+      .hero h1 {
+        font-size: 2rem;
+      }
+      
+      h2 {
+        font-size: clamp(1.5rem, 3vw, 2rem);
+      }
+      
+      section .content-wrapper {
+        width: 85%;
+        max-width: none;
+        padding: 6rem 1rem 0;
+      }
+      
+      .overview-main-text {
+        padding: 0;
+      }
+      
+      .hamburger {
+        display: flex;
+      }
+      
+      .nav-container {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.9);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        transition: left 0.3s ease;
+        gap: 2rem;
+      }
+      
+      .nav-container.active {
+        left: 0;
+      }
+      
+      nav a {
+        font-size: 1.5rem;
+        padding: 1rem 2rem;
+      }
+      
+      #overview {
+        background-image: url('/Users/takasaki19841121/Desktop/if-ai-site-main/images/bgsp1.png');
+      }
+      
+      #support {
+        background-image: url('/Users/takasaki19841121/Desktop/if-ai-site-main/images/bgsp2.png');
+      }
+      
+      #voices {
+        background-image: url('/Users/takasaki19841121/Desktop/if-ai-site-main/images/casesp1.png');
+        transition: background-image 0.8s ease-in-out;
+      }
+      
+      #community {
+        background-image: url('/Users/takasaki19841121/Desktop/if-ai-site-main/images/bgsp4.png');
+      }
+      
+      #results {
+        background-image: url('/Users/takasaki19841121/Desktop/if-ai-site-main/images/bgsp5.png');
+      }
+      
+      .card-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .stats-grid {
+        grid-template-columns: repeat(2, minmax(120px, 150px));
+      }
+    }
+
+    .overview-content-wrapper {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .overview-main-text {
+      font-size: 1.3rem;
+      line-height: 2;
+      color: white;
+      margin-bottom: 3rem;
+      max-width: 100%;
+      padding: 0 2rem;
+      text-shadow: 3px 3px 6px rgba(139, 96, 64, 0.8), 
+                  -1px -1px 2px rgba(139, 96, 64, 0.8),
+                   1px -1px 2px rgba(139, 96, 64, 0.8),
+                  -1px  1px 2px rgba(139, 96, 64, 0.8),
+                   1px  1px 2px rgba(139, 96, 64, 0.8),
+                   0px  0px 10px rgba(139, 96, 64, 0.6);
+    }
+
+  </style>
+</head>
+<body>
+  <nav id="navbar">
+    <div class="hamburger" onclick="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <div class="nav-container" id="navContainer">
+      <a href="#overview" onclick="closeMenu()">私たちについて</a>
+      <a href="#support" onclick="closeMenu()">支援内容</a>
+      <a href="#voices" onclick="closeMenu()">利用者の声</a>
+      <a href="#community" onclick="closeMenu()">地域連携</a>
+      <a href="#results" onclick="closeMenu()">実績</a>
+      <a href="#contact" onclick="closeMenu()">お問い合わせ</a>
+    </div>
+  </nav>
+
+  <div class="hero">
+    <div class="hero-content">
+      <h1>if(AI)</h1>
+      <p class="tagline">地域と共に歩む、温かい就労支援</p>
+      <p style="font-size: 1.2rem; margin-bottom: 2rem; opacity: 0.9;">
+        秋田市の若者・障がい者の皆様に<br>
+        AIと地域の力で新しい未来を
+      </p>
+      <a href="#overview" class="cta-button">私たちの想いを知る</a>
+    </div>
+  </div>
+
+  <section id="overview" class="container">
+    <div class="content-wrapper">
+    <h2>私たちの想い</h2>
+    <div class="overview-content-wrapper">
+      <p class="overview-main-text">
+        if(AI)は、秋田市に根ざした就労支援プロジェクトです。AIの力と地域の温かさを組み合わせ、一人ひとりに寄り添った支援を提供していきます。また、地域の就労支援・引きこもり支援・障がい者支援事業者へ、それぞれの事業に合わせたAIツールを開発・提供し、各サービスの質と効果を加速させていきます。
+      </p>
+      <div class="stats-container">
+        <div class="stats-header">
+          <h3>初年度目標値</h3>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-item">
+            <span class="stat-number" data-target="150">0</span>
+            <span class="stat-label">支援目標</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number" data-target="15">0</span>
+            <span class="stat-label">連携目標</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number" data-target="65">0</span>
+            <span class="stat-label">就労率目標 %</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number" data-target="98">0</span>
+            <span class="stat-label">満足度目標 %</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <section id="support" class="container">
+    <div class="content-wrapper">
+    <h2>暖かい支援の形</h2>
+    <div class="card-grid">
+      <div class="card">
+        <h3>🌱 不登校支援</h3>
+        <p>
+          フリースクールと連携し、お子様一人ひとりの学習スタイルに合わせた支援を行います。
+          自分のペースで学べる環境を大切にしています。
+        </p>
+      </div>
+      <div class="card">
+        <h3>💼 障がい者就労支援</h3>
+        <p>
+          A型事業所や地元企業と協力し、個々の能力を最大限に活かせる職場環境を一緒に見つけます。
+          あなたの強みが輝く場所があります。
+        </p>
+      </div>
+      <div class="card">
+        <h3>🤝 若者自立支援</h3>
+        <p>
+          地域の商工会議所と連携し、地元企業とのマッチングをサポート。
+          秋田で働き、秋田で生きる喜びを共に見つけましょう。
+        </p>
+      </div>
+      <div class="card">
+        <h3>🏠 訪問支援</h3>
+        <p>
+          外出が困難な方には、訪問看護チームと連携した在宅支援も。
+          あなたのペースで、一歩ずつ前へ進むお手伝いをします。
+        </p>
+      </div>
+      <div class="card">
+        <h3>💻 デジタル活用支援</h3>
+        <p>
+          プログラミングやデザインなど、デジタルスキルの習得をサポート。
+          新しい可能性を一緒に探していきます。
+        </p>
+      </div>
+      <div class="card">
+        <h3>🎯 個別最適化プラン</h3>
+        <p>
+          AIが分析した適性と、支援者の温かい眼差しで、
+          あなただけの成長プランを作成します。
+        </p>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <section id="voices" class="container">
+    <div class="content-wrapper">
+    <h2>利用者様の声</h2>
+    <div class="testimonial-carousel">
+      <div class="testimonial-slide active">
+        <p class="testimonial-text">
+          「学校には行けなかったけど、if(AI)のサポートで自分のペースで学習を続けることができました。
+          今では地元のIT企業でプログラマーとして働いています。」
+        </p>
+        <p class="testimonial-author">- 田中さん（19歳・秋田市）</p>
+      </div>
+      <div class="testimonial-slide">
+        <p class="testimonial-text">
+          「うつ病で仕事を辞めてから引きこもっていましたが、訪問支援から始めてもらい、
+          今は週3日のペースで働けるようになりました。自分でも驚いています。」
+        </p>
+        <p class="testimonial-author">- 鈴木さん（42歳・秋田市）</p>
+      </div>
+      <div class="testimonial-slide">
+        <p class="testimonial-text">
+          「発達障害があってコミュニケーションが苦手でしたが、
+          得意なデザインスキルを活かせる仕事を見つけてもらい、今は充実した毎日です。」
+        </p>
+        <p class="testimonial-author">- 佐藤さん（28歳・秋田市）</p>
+      </div>
+      <div class="carousel-dots">
+        <span class="dot active" onclick="currentSlide(1)"></span>
+        <span class="dot" onclick="currentSlide(2)"></span>
+        <span class="dot" onclick="currentSlide(3)"></span>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <section id="community" class="container">
+    <div class="content-wrapper">
+    <h2>地域の皆様と共に</h2>
+    <p style="text-align: center; font-size: 1.2rem; margin-bottom: 3rem; color: white; text-shadow: 3px 3px 6px rgba(139, 96, 64, 0.8), -1px -1px 2px rgba(139, 96, 64, 0.8), 1px -1px 2px rgba(139, 96, 64, 0.8), -1px 1px 2px rgba(139, 96, 64, 0.8), 1px 1px 2px rgba(139, 96, 64, 0.8), 0px 0px 10px rgba(139, 96, 64, 0.6);">
+      秋田市の様々な団体・企業様と手を取り合い、<br>
+      温かい支援の輪を広げています
+    </p>
+    <div class="partner-logos">
+      <div class="partner-logo">
+        <h4>if(塾)</h4>
+        <p>不登校児、発達障害児支援</p>
+      </div>
+      <div class="partner-logo">
+        <h4>株式会社BarrierFree</h4>
+        <p>A型事業所連携</p>
+      </div>
+      <div class="partner-logo">
+        <h4>株式会社eSocial Cue</h4>
+        <p>e-Sports支援</p>
+      </div>
+      <div class="partner-logo">
+        <h4>株式会社Seed</h4>
+        <p>AIツール開発</p>
+      </div>
+      <div class="partner-logo">
+        <h4>NPO法人NAOのたまご</h4>
+        <p>障がい児サポート</p>
+      </div>
+      <div class="partner-logo">
+        <h4>ライフデザインラボ株式会社</h4>
+        <p>訪問看護</p>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <section id="results" class="container">
+    <div class="content-wrapper">
+    <h2>共に歩んだ成果</h2>
+    <div class="card-grid">
+      <div class="card" style="background: linear-gradient(135deg, #fff, #fef6ed);">
+        <h3>🎯 初年度目標</h3>
+        <ul style="list-style: none; padding: 0;">
+          <li>✓ 支援対象者 150名</li>
+          <li>✓ 就労・復学率 30%</li>
+          <li>✓ 連携団体 15団体</li>
+          <li>✓ 市内3拠点展開</li>
+        </ul>
+      </div>
+      <div class="card" style="background: linear-gradient(135deg, #fff, #fff9f3);">
+        <h3>📈 3年後の展望</h3>
+        <ul style="list-style: none; padding: 0;">
+          <li>→ 支援対象者 500名</li>
+          <li>→ 就労・復学率 65%</li>
+          <li>→ 連携団体 35団体</li>
+          <li>→ 秋田市全域展開</li>
+        </ul>
+      </div>
+      <div class="card" style="background: linear-gradient(135deg, #fff, #fef6ed);">
+        <h3>🌟 地域への効果</h3>
+        <ul style="list-style: none; padding: 0;">
+          <li>◆ 社会保障費の削減</li>
+          <li>◆ 地域経済の活性化</li>
+          <li>◆ 共生社会の実現</li>
+          <li>◆ 若者の定着促進</li>
+        </ul>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <footer id="contact">
+    <div class="footer-content">
+      <div class="footer-links" style="text-align: center; margin-bottom: 2rem;">
+        <a href="privacy.html" style="color: white; text-decoration: none; margin: 0 1rem; opacity: 0.8;">個人情報保護方針</a>
+        <a href="terms.html" style="color: white; text-decoration: none; margin: 0 1rem; opacity: 0.8;">利用規約</a>
+        <a href="tokusho.html" style="color: white; text-decoration: none; margin: 0 1rem; opacity: 0.8;">特定商取引法に基づく表記</a>
+      </div>
+      
+      <p style="opacity: 0.8;">&copy; 2025 if(AI) - 秋田市から始まる、新しい支援の形</p>
+    </div>
+  </footer>
+
+  <div class="floating-action" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+    ↑
+  </div>
+
+  <script>
+    // Smooth scroll for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // Hamburger menu toggle
+    function toggleMenu() {
+      const hamburger = document.querySelector('.hamburger');
+      const navContainer = document.getElementById('navContainer');
+      
+      hamburger.classList.toggle('active');
+      navContainer.classList.toggle('active');
+    }
+
+    function closeMenu() {
+      const hamburger = document.querySelector('.hamburger');
+      const navContainer = document.getElementById('navContainer');
+      
+      hamburger.classList.remove('active');
+      navContainer.classList.remove('active');
+    }
+
+    // Animated counter
+    const animateCounters = () => {
+      const counters = document.querySelectorAll('.stat-number');
+      
+      counters.forEach(counter => {
+        const target = parseInt(counter.getAttribute('data-target'));
+        const duration = 2000;
+        const step = target / (duration / 16);
+        let current = 0;
+        
+        const updateCounter = () => {
+          current += step;
+          if (current < target) {
+            counter.textContent = Math.floor(current);
+            requestAnimationFrame(updateCounter);
+          } else {
+            counter.textContent = target;
+          }
+        };
+        
+        // Start animation when element is visible
+        const counterObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting && counter.textContent === '0') {
+              updateCounter();
+              counterObserver.unobserve(entry.target);
+            }
+          });
+        });
+        
+        counterObserver.observe(counter);
+      });
+    };
+
+    animateCounters();
+
+    // Testimonial carousel with background switching
+    let currentSlideIndex = 1;
+    const slides = document.querySelectorAll('.testimonial-slide');
+    const dots = document.querySelectorAll('.dot');
+    const voicesSection = document.getElementById('voices');
+    
+    // Background images for each case
+    const backgroundImages = {
+      pc: [
+        "url('/Users/takasaki19841121/Desktop/if-ai-site-main/images/casepc1.png')",
+        "url('/Users/takasaki19841121/Desktop/if-ai-site-main/images/casepc3.png')",
+        "url('/Users/takasaki19841121/Desktop/if-ai-site-main/images/casepc2.png')"
+      ],
+      sp: [
+        "url('/Users/takasaki19841121/Desktop/if-ai-site-main/images/casesp1.png')",
+        "url('/Users/takasaki19841121/Desktop/if-ai-site-main/images/casesp3.png')",
+        "url('/Users/takasaki19841121/Desktop/if-ai-site-main/images/casesp2.png')"
+      ]
+    };
+
+    function currentSlide(n) {
+      showSlide(currentSlideIndex = n);
+    }
+
+    function showSlide(n) {
+      if (n > slides.length) currentSlideIndex = 1;
+      if (n < 1) currentSlideIndex = slides.length;
+      
+      slides.forEach(slide => {
+        slide.classList.remove('active');
+      });
+      
+      dots.forEach(dot => {
+        dot.classList.remove('active');
+      });
+      
+      slides[currentSlideIndex - 1].classList.add('active');
+      dots[currentSlideIndex - 1].classList.add('active');
+      
+      // Change background image based on current slide and screen size
+      const isMobile = window.innerWidth <= 768;
+      const imageSet = isMobile ? backgroundImages.sp : backgroundImages.pc;
+      const newBackground = imageSet[currentSlideIndex - 1];
+      
+      if (voicesSection) {
+        voicesSection.style.backgroundImage = newBackground;
+      }
+    }
+
+    // Auto-advance carousel
+    setInterval(() => {
+      currentSlideIndex++;
+      showSlide(currentSlideIndex);
+    }, 5000);
+    
+    // Handle window resize to update background images
+    window.addEventListener('resize', () => {
+      showSlide(currentSlideIndex);
+    });
+
+    // Removed parallax effect for simpler structure
+  </script>
+</body>
+</html>
