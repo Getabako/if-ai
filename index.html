@@ -1,1049 +1,505 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>if(AI) - 地域と共に歩む、温かい就労支援</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>if(AI) | AIで、秋田の「できる」を増やす。</title>
+  <meta name="description" content="特定非営利活動法人if(AI)は、秋田でAIツール群Ashuraを活用し、不登校・ひきこもり、障害のある方、地域の学びと働く一歩を支えます。">
+  <meta property="og:title" content="if(AI) | AIで、秋田の「できる」を増やす。">
+  <meta property="og:description" content="特定非営利活動法人if(AI)は、秋田でAIツール群Ashuraを活用し、不登校・ひきこもり、障害のある方、地域の学びと働く一歩を支えます。">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="images/renewal-2026/ogp.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#1B4D6B">
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
     :root {
-      --primary-color: #d4822f;
-      --secondary-color: #8b6040;
-      --accent-color: #e8af5c;
-      --warm-orange: #ff9a56;
-      --warm-yellow: #ffd23f;
-      --warm-pink: #ff6b9d;
-      --warm-bg: #fef6ed;
-      --warm-bg-alt: #fff9f3;
-      --warm-bg-gradient: linear-gradient(135deg, #fef6ed 0%, #fff0e6 50%, #fff9f3 100%);
-      --text-dark: #4a3426;
-      --text-light: #7a6456;
-      --card-shadow: 0 8px 32px rgba(139, 96, 64, 0.08);
-      --hover-shadow: 0 20px 60px rgba(212, 130, 47, 0.2);
-      --glow-shadow: 0 0 30px rgba(212, 130, 47, 0.4);
+      --ink: #16384c;
+      --brand: #1B4D6B;
+      --brand-2: #246d8f;
+      --amber: #F2A93B;
+      --cream: #fff8ec;
+      --paper: #fffdf8;
+      --line: rgba(27, 77, 107, .16);
+      --shadow: 0 22px 60px rgba(22, 56, 76, .16);
     }
 
     html {
-      scroll-behavior: smooth;
-      scroll-padding-top: 70px;
+      font-size: 17px;
+      scroll-behavior: auto;
     }
 
     body {
-      font-family: 'Noto Sans JP', 'Hiragino Sans', sans-serif;
-      line-height: 1.8;
-      color: var(--text-dark);
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 8%, rgba(242, 169, 59, .24), transparent 30rem),
+        radial-gradient(circle at 86% 16%, rgba(36, 109, 143, .18), transparent 34rem),
+        linear-gradient(180deg, #f8fbfb 0%, #fff8ec 48%, #f7fbfb 100%);
+      font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Yu Gothic UI", Meiryo, system-ui, sans-serif;
+      font-size: 1rem;
+      line-height: 1.9;
+      letter-spacing: .04em;
       overflow-x: hidden;
-      position: relative;
     }
 
-    body::before {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: radial-gradient(ellipse at center, transparent 0%, rgba(112, 66, 20, 0.1) 100%);
-      pointer-events: none;
-      z-index: 9999;
-      mix-blend-mode: multiply;
+    h1, h2, h3, h4, p {
+      overflow-wrap: anywhere;
     }
 
-
-    .hero {
-      min-height: 100vh;
-      margin-top: 0;
-      background-image: url('images/toppc.png');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      color: white;
-      position: relative;
-    }
-
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(to bottom,
-        rgba(0, 0, 0, 0.6) 0%,
-        rgba(112, 66, 20, 0.4) 50%,
-        rgba(0, 0, 0, 0.6) 100%);
-      z-index: 1;
-    }
-
-    .hero::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 40px;
-      background: linear-gradient(to bottom, 
-        rgba(0, 0, 0, 1) 0%, 
-        rgba(0, 0, 0, 1) 30%,
-        transparent 100%);
-      z-index: 2;
-      pointer-events: none;
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 2;
-    }
-
-
-
-    .hero h1 {
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      font-weight: 700;
-      margin-bottom: 1.5rem;
-      letter-spacing: 0.05em;
-      text-shadow: 3px 3px 6px rgba(139, 96, 64, 0.8), 
-                  -1px -1px 2px rgba(139, 96, 64, 0.8),
-                   1px -1px 2px rgba(139, 96, 64, 0.8),
-                  -1px  1px 2px rgba(139, 96, 64, 0.8),
-                   1px  1px 2px rgba(139, 96, 64, 0.8),
-                   0px  0px 10px rgba(139, 96, 64, 0.6);
-    }
-
-    .hero .tagline {
-      font-size: clamp(1.2rem, 3vw, 1.8rem);
-      margin-bottom: 2rem;
-      opacity: 0.95;
-      text-shadow: 2px 2px 4px rgba(139, 96, 64, 0.8), 
-                  -1px -1px 1px rgba(139, 96, 64, 0.8),
-                   1px -1px 1px rgba(139, 96, 64, 0.8),
-                  -1px  1px 1px rgba(139, 96, 64, 0.8),
-                   1px  1px 1px rgba(139, 96, 64, 0.8);
-    }
-
-    .cta-button {
-      display: inline-block;
-      padding: 1rem 3rem;
-      background: white;
-      color: var(--primary-color);
-      text-decoration: none;
-      border-radius: 50px;
-      font-weight: 600;
-      font-size: 1.1rem;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 20px rgba(255, 255, 255, 0.3);
-    }
-
-    .cta-button:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 6px 30px rgba(255, 255, 255, 0.4);
-    }
-
-    nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      background: transparent;
-      padding: 1rem;
-      z-index: 1000;
-    }
-
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      cursor: pointer;
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      width: 30px;
-      height: 30px;
-      justify-content: space-around;
-      align-items: center;
-    }
-
-    .hamburger span {
-      display: block;
-      height: 3px;
-      width: 100%;
-      background-color: white;
-      transition: all 0.3s ease;
-      transform-origin: center;
-    }
-
-    .hamburger.active span:nth-child(1) {
-      transform: rotate(45deg) translate(7px, 7px);
-    }
-
-    .hamburger.active span:nth-child(2) {
-      opacity: 0;
-    }
-
-    .hamburger.active span:nth-child(3) {
-      transform: rotate(-45deg) translate(7px, -7px);
-    }
-
-    .nav-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 1rem;
-      transition: all 0.3s ease;
-    }
-
-    nav a {
-      color: white;
-      text-decoration: none;
-      padding: 0.5rem 1rem;
-      border-radius: 25px;
-      transition: all 0.3s ease;
-      background: rgba(0, 0, 0, 0.3);
-      backdrop-filter: blur(5px);
-    }
-
-    nav a:hover {
-      background: rgba(255, 255, 255, 0.9);
-      color: var(--primary-color);
-    }
-
-    .container {
-      width: 100%;
-      margin: 0;
-      padding: 0 2rem;
-    }
-
-    .content-wrapper {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    section {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      position: relative;
-      width: 100vw;
-      margin-left: calc(50% - 50vw);
-      padding: 2rem 0;
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      border-top: 20px solid #000;
-      border-bottom: 20px solid #000;
-      box-shadow: inset 0 20px 40px -20px rgba(0, 0, 0, 0.8),
-                  inset 0 -20px 40px -20px rgba(0, 0, 0, 0.8);
-    }
-
-    section::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(to bottom, 
-        rgba(0, 0, 0, 0.8) 0%, 
-        rgba(0, 0, 0, 0.8) 3%, 
-        rgba(112, 66, 20, 0.35) 3%, 
-        rgba(112, 66, 20, 0.35) 97%, 
-        rgba(0, 0, 0, 0.8) 97%, 
-        rgba(0, 0, 0, 0.8) 100%);
-      z-index: 1;
-    }
-
-    section::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: repeating-linear-gradient(
-        to bottom,
-        transparent,
-        transparent 2px,
-        rgba(0, 0, 0, 0.1) 2px,
-        rgba(0, 0, 0, 0.1) 4px
-      );
-      z-index: 1;
-      pointer-events: none;
-      mix-blend-mode: multiply;
-    }
-
-    section .content-wrapper,
-    section h2 {
-      position: relative;
-      z-index: 2;
-    }
-
-    #overview {
-      background-image: url('images/bgpc1.png');
-    }
-
-    #support {
-      background-image: url('images/bgpc3.png');
-    }
-
-    #voices {
-      background-image: url('images/casepc1.png');
-      transition: background-image 0.8s ease-in-out;
-    }
-
-    #community {
-      background-image: url('images/bgpc4.png');
-    }
-
-    #results {
-      background-image: url('images/bgpc5.png');
-    }
-
-    section .content-wrapper {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 2rem;
-      width: 100%;
-    }
-
-    h2 {
-      font-size: clamp(2rem, 4vw, 2.8rem);
-      color: white;
-      text-align: center;
-      position: absolute;
-      top: 2rem;
-      left: 50%;
-      transform: translateX(-50%);
-      margin: 0;
-      padding-bottom: 1rem;
-      z-index: 10;
-      text-shadow: 3px 3px 6px rgba(139, 96, 64, 0.8), 
-                  -1px -1px 2px rgba(139, 96, 64, 0.8),
-                   1px -1px 2px rgba(139, 96, 64, 0.8),
-                  -1px  1px 2px rgba(139, 96, 64, 0.8),
-                   1px  1px 2px rgba(139, 96, 64, 0.8),
-                   0px  0px 10px rgba(139, 96, 64, 0.6);
-    }
-
-    h2::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 80px;
-      height: 3px;
-      background: linear-gradient(90deg, var(--accent-color), var(--primary-color));
-      border-radius: 2px;
-    }
-
-    section .content-wrapper {
-      padding-top: 6rem;
-    }
-
-    .card-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-      margin-top: 3rem;
-    }
-
-    .card {
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(254, 246, 237, 0.95));
-      border-radius: 20px;
-      padding: 2rem;
-      box-shadow: var(--card-shadow);
-      transition: box-shadow 0.3s ease;
-    }
-
-    .card:hover {
-      box-shadow: var(--hover-shadow);
-    }
-
-    .card h3 {
-      color: var(--secondary-color);
-      margin-bottom: 1rem;
-      font-size: 1.4rem;
-    }
-
-    .card p {
-      color: var(--text-light);
-      line-height: 1.8;
-    }
-
-    .stats-container {
-      margin: 3rem 0;
-      text-align: center;
-    }
-
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(120px, 150px));
-      gap: 1.5rem;
-      margin-top: 2rem;
-      justify-content: center;
-    }
-
-    .stat-item {
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(254, 246, 237, 0.95));
-      border-radius: 15px;
-      padding: 2rem 1rem;
-      box-shadow: var(--card-shadow);
-    }
-
-    .stat-number {
-      font-size: 3rem;
-      font-weight: 700;
-      color: var(--primary-color);
-      display: block;
-      margin-bottom: 0.5rem;
-    }
-
-    .stat-label {
-      color: var(--text-light);
-      font-size: 1.1rem;
-    }
-
-    .testimonial-carousel {
-      position: relative;
-      max-width: 800px;
-      margin: 3rem auto;
-      overflow: hidden;
-      border-radius: 20px;
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(254, 246, 237, 0.95));
-      box-shadow: var(--card-shadow);
-    }
-
-    .testimonial-slide {
-      padding: 3rem;
-    }
-
-    .testimonial-slide.active {
-      display: block;
-    }
-
-    .testimonial-slide:not(.active) {
-      display: none;
-    }
-
-    .testimonial-text {
-      font-size: 1.2rem;
-      color: var(--text-dark);
-      line-height: 1.8;
-      margin-bottom: 1.5rem;
-      font-style: italic;
-    }
-
-    .testimonial-author {
-      color: var(--secondary-color);
-      font-weight: 600;
-    }
-
-    .carousel-dots {
-      display: flex;
-      justify-content: center;
-      gap: 0.5rem;
-      padding: 1rem;
-    }
-
-    .dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: var(--text-light);
-      opacity: 0.3;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .dot.active {
-      opacity: 1;
-      background: var(--primary-color);
-      transform: scale(1.2);
-    }
-
-    .partner-logos {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 3rem;
-      margin: 3rem 0;
-    }
-
-    .partner-logo {
-      padding: 2rem;
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(254, 246, 237, 0.95));
-      border-radius: 20px;
-      box-shadow: var(--card-shadow);
-      text-align: center;
-    }
-
-    footer {
-      background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
-      color: white;
-      padding: 4rem 0;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-
-    .footer-content {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 0 1rem;
-    }
-
-    .stats-header {
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-
-    .stats-header h3 {
-      color: white;
-      font-size: 1.5rem;
-      margin-bottom: 0.5rem;
-      text-shadow: 3px 3px 6px rgba(139, 96, 64, 0.8), 
-                  -1px -1px 2px rgba(139, 96, 64, 0.8),
-                   1px -1px 2px rgba(139, 96, 64, 0.8),
-                  -1px  1px 2px rgba(139, 96, 64, 0.8),
-                   1px  1px 2px rgba(139, 96, 64, 0.8),
-                   0px  0px 10px rgba(139, 96, 64, 0.6);
-    }
-
-    .contact-info {
-      margin: 3rem 0;
-      position: relative;
-      z-index: 1;
-    }
-
-    .contact-info p {
-      margin: 1rem 0;
-      font-size: 1.1rem;
-    }
-
-    .contact-highlight {
-      background: rgba(255, 255, 255, 0.15);
-      border-radius: 15px;
-      padding: 2rem;
-      margin: 2rem 0;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(10px);
-    }
-
-    .contact-highlight h3 {
-      color: white;
-      margin-bottom: 1rem;
-      font-size: 1.5rem;
-    }
-
-    .contact-info a {
-      color: white;
-      text-decoration: none;
-      border-bottom: 1px dotted rgba(255, 255, 255, 0.5);
-      transition: border-color 0.3s ease;
-    }
-
-    .contact-info a:hover {
-      border-color: white;
-    }
-
-    .floating-action {
-      position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      background: var(--primary-color);
-      color: white;
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 20px rgba(212, 130, 47, 0.3);
-      cursor: pointer;
-      transition: transform 0.3s ease;
-      z-index: 999;
-      font-size: 1.5rem;
-    }
-
-    .floating-action:hover {
-      transform: scale(1.1);
-    }
-
-    @media (max-width: 768px) {
-      .hero {
-        background-image: url('images/topsp.png');
-      }
-      
-      .hero h1 {
-        font-size: 2rem;
-      }
-      
-      h2 {
-        font-size: clamp(1.5rem, 3vw, 2rem);
-      }
-      
-      section .content-wrapper {
-        width: 85%;
-        max-width: none;
-        padding: 6rem 1rem 0;
-      }
-      
-      .overview-main-text {
-        padding: 0;
-      }
-      
-      .hamburger {
-        display: flex;
-      }
-      
-      .nav-container {
-        position: fixed;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100vh;
-        background: rgba(0, 0, 0, 0.9);
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        transition: left 0.3s ease;
-        gap: 2rem;
-      }
-      
-      .nav-container.active {
-        left: 0;
-      }
-      
-      nav a {
-        font-size: 1.5rem;
-        padding: 1rem 2rem;
-      }
-      
-      #overview {
-        background-image: url('images/bgsp1.png');
-      }
-      
-      #support {
-        background-image: url('images/bgsp2.png');
-      }
-      
-      #voices {
-        background-image: url('images/casesp1.png');
-        transition: background-image 0.8s ease-in-out;
-      }
-      
-      #community {
-        background-image: url('images/bgsp4.png');
-      }
-      
-      #results {
-        background-image: url('images/bgsp5.png');
-      }
-      
-      .card-grid {
-        grid-template-columns: 1fr;
-      }
-      
-      .stats-grid {
-        grid-template-columns: repeat(2, minmax(120px, 150px));
-      }
-    }
-
-    .overview-content-wrapper {
-      max-width: 800px;
-      margin: 0 auto;
-      text-align: center;
+    h1, h2, h3, h4 {
+      letter-spacing: .05em;
+      line-height: 1.35;
+      font-weight: 800;
     }
 
-    .overview-main-text {
-      font-size: 1.3rem;
-      line-height: 2;
-      color: white;
-      margin-bottom: 3rem;
+    img {
       max-width: 100%;
-      padding: 0 2rem;
-      text-shadow: 3px 3px 6px rgba(139, 96, 64, 0.8), 
-                  -1px -1px 2px rgba(139, 96, 64, 0.8),
-                   1px -1px 2px rgba(139, 96, 64, 0.8),
-                  -1px  1px 2px rgba(139, 96, 64, 0.8),
-                   1px  1px 2px rgba(139, 96, 64, 0.8),
-                   0px  0px 10px rgba(139, 96, 64, 0.6);
+      display: block;
     }
 
+    a {
+      color: inherit;
+    }
+
+    .container-wide {
+      width: min(1120px, calc(100% - 2rem));
+      margin-inline: auto;
+    }
+
+    .glass {
+      background: rgba(255, 255, 255, .72);
+      border: 1px solid rgba(255, 255, 255, .72);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    .soft-card {
+      background: rgba(255, 255, 255, .9);
+      border: 1px solid var(--line);
+      box-shadow: 0 18px 48px rgba(27, 77, 107, .1);
+      border-radius: 8px;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      min-height: 3.35rem;
+      align-items: center;
+      justify-content: center;
+      gap: .55rem;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--amber), #ffd887);
+      color: #2d220c;
+      font-weight: 800;
+      padding: .9rem 1.45rem;
+      box-shadow: 0 16px 34px rgba(242, 169, 59, .32);
+      transition: transform .25s ease, box-shadow .25s ease, filter .25s ease;
+    }
+
+    .btn-primary:hover,
+    .btn-primary:focus-visible {
+      transform: translateY(-2px);
+      box-shadow: 0 20px 42px rgba(242, 169, 59, .42);
+      filter: saturate(1.05);
+      outline: 3px solid rgba(242, 169, 59, .35);
+      outline-offset: 3px;
+    }
+
+    .section {
+      padding: clamp(4.2rem, 8vw, 7rem) 0;
+      position: relative;
+    }
+
+    .eyebrow {
+      color: var(--brand);
+      font-size: .9rem;
+      font-weight: 800;
+      letter-spacing: .06em;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity .75s ease, transform .75s ease;
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    .nav-link {
+      border-radius: 999px;
+      padding: .48rem .72rem;
+      transition: background .2s ease, color .2s ease;
+      white-space: nowrap;
+    }
+
+    .nav-link:hover,
+    .nav-link:focus-visible {
+      background: rgba(27, 77, 107, .1);
+      color: var(--brand);
+      outline: none;
+    }
+
+    .hero-visual {
+      min-height: min(66vw, 620px);
+      border-radius: 8px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 34px 90px rgba(22, 56, 76, .24);
+      background: #dcecf0;
+    }
+
+    .hero-visual::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(15, 52, 73, .56), rgba(15, 52, 73, .13) 52%, rgba(255,255,255,0));
+      pointer-events: none;
+    }
+
+    .hero-visual img {
+      width: 100%;
+      height: 100%;
+      min-height: min(66vw, 620px);
+      object-fit: cover;
+    }
+
+    .floating-panel {
+      position: absolute;
+      left: clamp(1rem, 4vw, 3.2rem);
+      bottom: clamp(1rem, 4vw, 3rem);
+      width: min(520px, calc(100% - 2rem));
+      color: white;
+      z-index: 2;
+      text-shadow: 0 2px 18px rgba(0, 0, 0, .24);
+    }
+
+    .icon-box {
+      width: 3rem;
+      height: 3rem;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, rgba(27,77,107,.12), rgba(242,169,59,.18));
+      color: var(--brand);
+      flex: 0 0 auto;
+    }
+
+    .step-dot {
+      width: 2.8rem;
+      height: 2.8rem;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      background: var(--brand);
+      color: white;
+      font-weight: 800;
+      box-shadow: 0 12px 26px rgba(27, 77, 107, .24);
+      flex: 0 0 auto;
+    }
+
+    .partner-band {
+      background-image: linear-gradient(90deg, rgba(11, 39, 55, .86), rgba(27, 77, 107, .52)), url("images/partner-bg.png");
+      background-size: cover;
+      background-position: center;
+      color: white;
+    }
+
+    .partner-card {
+      background: rgba(255,255,255,.14);
+      border: 1px solid rgba(255,255,255,.24);
+      backdrop-filter: blur(14px);
+      border-radius: 8px;
+    }
+
+    @media (max-width: 760px) {
+      html {
+        font-size: 16px;
+      }
+
+      body {
+        line-height: 1.85;
+      }
+
+      .hero-visual,
+      .hero-visual img {
+        min-height: 620px;
+      }
+
+      .hero-visual::after {
+        background: linear-gradient(180deg, rgba(15, 52, 73, .16), rgba(15, 52, 73, .72));
+      }
+
+      .floating-panel {
+        top: auto;
+        bottom: 1.1rem;
+      }
+    }
   </style>
 </head>
 <body>
-  <nav id="navbar">
-    <div class="hamburger" onclick="toggleMenu()">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
-    <div class="nav-container" id="navContainer">
-      <a href="#overview" onclick="closeMenu()">私たちについて</a>
-      <a href="#support" onclick="closeMenu()">支援内容</a>
-      <a href="#voices" onclick="closeMenu()">利用者の声</a>
-      <a href="#community" onclick="closeMenu()">地域連携</a>
-      <a href="#results" onclick="closeMenu()">実績</a>
-      <a href="#contact" onclick="closeMenu()">お問い合わせ</a>
-    </div>
-  </nav>
+  <header class="fixed inset-x-0 top-0 z-50 border-b border-white/60 bg-white/82 backdrop-blur-xl">
+    <nav class="container-wide flex min-h-[72px] items-center justify-between gap-4" aria-label="主要ナビゲーション">
+      <a href="#hero" class="flex items-center gap-3 font-black text-[#1B4D6B]" aria-label="if(AI) ホームへ">
+        <span class="grid h-10 w-10 place-items-center rounded-full bg-[#1B4D6B] text-white">if</span>
+        <span class="text-xl">if(AI)</span>
+      </a>
+      <div class="flex min-w-0 flex-1 items-center gap-1 overflow-x-auto text-sm font-bold text-[#264f64] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <a class="nav-link" href="#mission">想い</a>
+        <a class="nav-link" href="#inuemon">イヌえもん</a>
+        <a class="nav-link" href="#services">できること</a>
+        <a class="nav-link" href="#flow">支援の流れ</a>
+        <a class="nav-link" href="#voices">声</a>
+        <a class="nav-link" href="#partners">連携</a>
+        <a class="nav-link" href="#about">法人情報</a>
+        <a class="nav-link" href="#contact">お問い合わせ</a>
+      </div>
+      <a href="#contact" class="btn-primary hidden shrink-0 text-sm xl:inline-flex" aria-label="無料相談・見学を申し込む">
+        無料相談・見学を申し込む
+      </a>
+    </nav>
+  </header>
 
-  <div class="hero">
-    <div class="hero-content">
-      <h1>if(AI)</h1>
-      <p class="tagline">地域と共に歩む、温かい就労支援</p>
-      <p style="font-size: 1.2rem; margin-bottom: 2rem; opacity: 0.9;">
-        秋田市の若者・障がい者の皆様に<br>
-        AIと地域の力で新しい未来を
-      </p>
-      <a href="#overview" class="cta-button">私たちの想いを知る</a>
-    </div>
-  </div>
-
-  <section id="overview" class="container">
-    <div class="content-wrapper">
-    <h2>私たちの想い</h2>
-    <div class="overview-content-wrapper">
-      <p class="overview-main-text">
-        if(AI)は、秋田市に根ざした就労支援プロジェクトです。AIの力と地域の温かさを組み合わせ、一人ひとりに寄り添った支援を提供していきます。また、地域の就労支援・引きこもり支援・障がい者支援事業者へ、それぞれの事業に合わせたAIツールを開発・提供し、各サービスの質と効果を加速させていきます。
-      </p>
-      <div class="stats-container">
-        <div class="stats-header">
-          <h3>初年度目標値</h3>
-        </div>
-        <div class="stats-grid">
-          <div class="stat-item">
-            <span class="stat-number" data-target="150">0</span>
-            <span class="stat-label">支援目標</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-number" data-target="15">0</span>
-            <span class="stat-label">連携目標</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-number" data-target="65">0</span>
-            <span class="stat-label">就労率目標 %</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-number" data-target="98">0</span>
-            <span class="stat-label">満足度目標 %</span>
+  <main>
+    <section id="hero" class="section pt-[104px]">
+      <div class="container-wide">
+        <div class="hero-visual reveal">
+          <img src="images/renewal-2026/hero.png" alt="イヌえもんと多様な人たちが秋田の街でタブレットを囲み笑顔でAIを使っている様子">
+          <div class="floating-panel">
+            <p class="mb-3 inline-flex rounded-full border border-white/45 bg-white/18 px-4 py-2 text-sm font-bold backdrop-blur-md">秋田発・AIを活用した学びと働く支援</p>
+            <h1 class="mb-5 text-[clamp(2.2rem,6vw,5rem)]">AIで、秋田の「できる」を増やす。</h1>
+            <p class="mb-7 text-[1.05rem] font-medium leading-[1.95] text-white/95">不登校・ひきこもり、障害のある方、地域で学び直したい方へ。AIを特別なものにせず、一人ひとりの小さな一歩を支える道具として届けます。</p>
+            <a href="#contact" class="btn-primary">無料相談・見学を申し込む</a>
           </div>
         </div>
       </div>
-    </div>
-    </div>
-  </section>
+    </section>
 
-  <section id="support" class="container">
-    <div class="content-wrapper">
-    <h2>暖かい支援の形</h2>
-    <div class="card-grid">
-      <div class="card">
-        <h3>🌱 不登校支援</h3>
-        <p>
-          フリースクールと連携し、お子様一人ひとりの学習スタイルに合わせた支援を行います。
-          自分のペースで学べる環境を大切にしています。
-        </p>
+    <section id="mission" class="section">
+      <div class="container-wide grid items-center gap-10 lg:grid-cols-[.95fr_1.05fr]">
+        <div class="reveal">
+          <p class="eyebrow mb-3">if(AI)の想い</p>
+          <h2 class="mb-6 text-[clamp(1.9rem,4vw,3.4rem)]">AIは、人の代わりではなく、人の可能性を広げる道具です。</h2>
+          <p class="mb-5 text-lg">特定非営利活動法人if(AI)は、秋田県内で学びや就労に不安を抱える方へ、AI技術を活用した教育訓練、職業能力開発、リスキリング支援を行う法人です。</p>
+          <p class="text-lg">画面の向こうにいる人を置き去りにしないこと。できることを急がせず、できそうなことから一緒に試すこと。私たちはその姿勢を大切にしながら、地域で自立した生活を営むための支援を育てていきます。</p>
+        </div>
+        <div class="glass reveal rounded-[8px] p-6 md:p-8">
+          <div class="grid gap-4 sm:grid-cols-2">
+            <div class="soft-card p-5">
+              <p class="mb-2 text-3xl font-black text-[#1B4D6B]">30種以上</p>
+              <p class="font-bold">独自AIツール群 Ashura</p>
+              <p class="mt-2 text-sm text-[#456579]">データ入力、デザイン、SNS、書類作成などを支援。</p>
+            </div>
+            <div class="soft-card p-5">
+              <p class="mb-2 text-3xl font-black text-[#1B4D6B]">約50名</p>
+              <p class="font-bold">会員コミュニティ運営実績</p>
+              <p class="mt-2 text-sm text-[#456579]">AI活用教育事業 if(塾) で培った知見を活用。</p>
+            </div>
+            <div class="soft-card p-5 sm:col-span-2">
+              <p class="font-bold text-[#1B4D6B]">地域で必要な支援を、具体的な仕事の練習につなげる。</p>
+              <p class="mt-2 text-sm text-[#456579]">AIチャット、オンライン学習、実践ワーク、就労支援事業所への導入研修まで、無理のない形で組み合わせます。</p>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="card">
-        <h3>💼 障がい者就労支援</h3>
-        <p>
-          A型事業所や地元企業と協力し、個々の能力を最大限に活かせる職場環境を一緒に見つけます。
-          あなたの強みが輝く場所があります。
-        </p>
-      </div>
-      <div class="card">
-        <h3>🤝 若者自立支援</h3>
-        <p>
-          地域の商工会議所と連携し、地元企業とのマッチングをサポート。
-          秋田で働き、秋田で生きる喜びを共に見つけましょう。
-        </p>
-      </div>
-      <div class="card">
-        <h3>🏠 訪問支援</h3>
-        <p>
-          外出が困難な方には、訪問看護チームと連携した在宅支援も。
-          あなたのペースで、一歩ずつ前へ進むお手伝いをします。
-        </p>
-      </div>
-      <div class="card">
-        <h3>💻 デジタル活用支援</h3>
-        <p>
-          プログラミングやデザインなど、デジタルスキルの習得をサポート。
-          新しい可能性を一緒に探していきます。
-        </p>
-      </div>
-      <div class="card">
-        <h3>🎯 個別最適化プラン</h3>
-        <p>
-          AIが分析した適性と、支援者の温かい眼差しで、
-          あなただけの成長プランを作成します。
-        </p>
-      </div>
-    </div>
-    </div>
-  </section>
+    </section>
 
-  <section id="voices" class="container">
-    <div class="content-wrapper">
-    <h2>利用者様の声</h2>
-    <div class="testimonial-carousel">
-      <div class="testimonial-slide active">
-        <p class="testimonial-text">
-          「学校には行けなかったけど、if(AI)のサポートで自分のペースで学習を続けることができました。
-          今では地元のIT企業でプログラマーとして働いています。」
-        </p>
-        <p class="testimonial-author">- 田中さん（19歳・秋田市）</p>
+    <section id="inuemon" class="section bg-white/55">
+      <div class="container-wide grid items-center gap-10 lg:grid-cols-[.9fr_1.1fr]">
+        <div class="reveal">
+          <img class="rounded-[8px] shadow-2xl" src="images/renewal-2026/inuemon-portrait.png" alt="秋田犬型AIロボットのマスコット、イヌえもんの全身イラスト">
+        </div>
+        <div class="reveal">
+          <p class="eyebrow mb-3">相棒「イヌえもん」紹介</p>
+          <h2 class="mb-6 text-[clamp(1.8rem,4vw,3.2rem)]">そばで見守り、困った時にそっと手伝う秋田犬型AIロボット。</h2>
+          <p class="mb-4 text-lg">イヌえもんは、秋田犬の親しみやすさとAIの頼もしさを合わせたif(AI)のシンボルです。名前には「犬のように寄り添い、AIでできることを広げる相棒」という意味を込めています。</p>
+          <p class="mb-6 text-lg">白からクリーム色の丸いボディ、やさしい目、胸元の淡い回路の光。高性能さを強く見せるよりも、子どもや高齢の方にも安心してもらえる存在としてLP全体に登場します。</p>
+          <div class="grid gap-3 sm:grid-cols-3">
+            <div class="soft-card p-4"><strong>性格</strong><br>急がせず、よく聞く</div>
+            <div class="soft-card p-4"><strong>役割</strong><br>AI体験の案内役</div>
+            <div class="soft-card p-4"><strong>合言葉</strong><br>まずは一緒に試す</div>
+          </div>
+        </div>
       </div>
-      <div class="testimonial-slide">
-        <p class="testimonial-text">
-          「うつ病で仕事を辞めてから引きこもっていましたが、訪問支援から始めてもらい、
-          今は週3日のペースで働けるようになりました。自分でも驚いています。」
-        </p>
-        <p class="testimonial-author">- 鈴木さん（42歳・秋田市）</p>
-      </div>
-      <div class="testimonial-slide">
-        <p class="testimonial-text">
-          「発達障害があってコミュニケーションが苦手でしたが、
-          得意なデザインスキルを活かせる仕事を見つけてもらい、今は充実した毎日です。」
-        </p>
-        <p class="testimonial-author">- 佐藤さん（28歳・秋田市）</p>
-      </div>
-      <div class="carousel-dots">
-        <span class="dot active" onclick="currentSlide(1)"></span>
-        <span class="dot" onclick="currentSlide(2)"></span>
-        <span class="dot" onclick="currentSlide(3)"></span>
-      </div>
-    </div>
-    </div>
-  </section>
+    </section>
 
-  <section id="community" class="container">
-    <div class="content-wrapper">
-    <h2>地域の皆様と共に</h2>
-    <p style="text-align: center; font-size: 1.2rem; margin-bottom: 3rem; color: white; text-shadow: 3px 3px 6px rgba(139, 96, 64, 0.8), -1px -1px 2px rgba(139, 96, 64, 0.8), 1px -1px 2px rgba(139, 96, 64, 0.8), -1px 1px 2px rgba(139, 96, 64, 0.8), 1px 1px 2px rgba(139, 96, 64, 0.8), 0px 0px 10px rgba(139, 96, 64, 0.6);">
-      秋田市の様々な団体・企業様と手を取り合い、<br>
-      温かい支援の輪を広げています
-    </p>
-    <div class="partner-logos">
-      <div class="partner-logo">
-        <h4>if(塾)</h4>
-        <p>不登校児、発達障害児支援</p>
+    <section id="services" class="section">
+      <div class="container-wide">
+        <div class="mx-auto mb-12 max-w-3xl text-center reveal">
+          <p class="eyebrow mb-3">AIでできること</p>
+          <h2 class="mb-5 text-[clamp(1.9rem,4vw,3.4rem)]">支援を「相談」で終わらせず、手を動かす体験へ。</h2>
+          <p class="text-lg">AshuraをはじめとするAIツールを使い、学習、仕事の練習、地域の人材育成まで、できるだけ専門用語を使わずに進めます。</p>
+        </div>
+        <div class="grid gap-6 lg:grid-cols-3">
+          <article class="soft-card reveal overflow-hidden">
+            <img src="images/renewal-2026/feature-1.png" alt="イヌえもんが若者にAI学習チャットの使い方を教えている様子">
+            <div class="p-6">
+              <div class="mb-4 flex items-center gap-3">
+                <span class="icon-box" aria-hidden="true">
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M4 19V7a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v12l-4-2H8l-4 2Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+                </span>
+                <h3 class="text-xl">不登校・ひきこもり支援</h3>
+              </div>
+              <p>居場所と相談支援に、AIチャットやオンライン学習支援を組み合わせます。外に出る前の準備、学び直し、興味の整理を本人のペースで進めます。</p>
+            </div>
+          </article>
+          <article class="soft-card reveal overflow-hidden">
+            <img src="images/renewal-2026/feature-2.png" alt="イヌえもんが障害のある利用者にAshuraを使った仕事の練習を案内している様子">
+            <div class="p-6">
+              <div class="mb-4 flex items-center gap-3">
+                <span class="icon-box" aria-hidden="true">
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M8 9h8M8 13h5M5 4h14v16H5z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+                <h3 class="text-xl">障害者AI就労支援</h3>
+              </div>
+              <p>Ashuraで、データ入力支援、デザイン制作支援、SNS運用支援、書類作成支援などを練習します。就労支援事業所へのツール貸出や導入研修も検討します。</p>
+            </div>
+          </article>
+          <article class="soft-card reveal overflow-hidden">
+            <img src="images/renewal-2026/feature-3.png" alt="地域の参加者がイヌえもんと一緒にAI研修を受けている様子">
+            <div class="p-6">
+              <div class="mb-4 flex items-center gap-3">
+                <span class="icon-box" aria-hidden="true">
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M3 20h18M6 16V8l6-4 6 4v8M9 20v-6h6v6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+                <h3 class="text-xl">地域AI人材育成</h3>
+              </div>
+              <p>誰でも使えるAI講座、企業向けAI研修、地域のリスキリング支援を行います。小さな業務改善から始め、地域の働き方に合う使い方を一緒に探します。</p>
+            </div>
+          </article>
+        </div>
       </div>
-      <div class="partner-logo">
-        <h4>株式会社BarrierFree</h4>
-        <p>A型事業所連携</p>
-      </div>
-      <div class="partner-logo">
-        <h4>株式会社eSocial Cue</h4>
-        <p>e-Sports支援</p>
-      </div>
-      <div class="partner-logo">
-        <h4>株式会社Seed</h4>
-        <p>AIツール開発</p>
-      </div>
-      <div class="partner-logo">
-        <h4>NPO法人NAOのたまご</h4>
-        <p>障がい児サポート</p>
-      </div>
-      <div class="partner-logo">
-        <a href="https://ldl-965.com/" target="_blank" style="text-decoration: none;">
-          <img src="images/kurokologo.jpg" alt="黒子ケアラボ" style="width: 200px; height: 80px; object-fit: contain; border-radius: 10px;">
-        </a>
-      </div>
-    </div>
-    </div>
-  </section>
+    </section>
 
-  <section id="results" class="container">
-    <div class="content-wrapper">
-    <h2>共に歩んだ成果</h2>
-    <div class="card-grid">
-      <div class="card" style="background: linear-gradient(135deg, #fff, #fef6ed);">
-        <h3>🎯 初年度目標</h3>
-        <ul style="list-style: none; padding: 0;">
-          <li>✓ 支援対象者 150名</li>
-          <li>✓ 就労・復学率 30%</li>
-          <li>✓ 連携団体 15団体</li>
-          <li>✓ 市内3拠点展開</li>
-        </ul>
+    <section id="flow" class="section bg-[#f1f8f9]">
+      <div class="container-wide grid items-center gap-10 lg:grid-cols-[1fr_.95fr]">
+        <div class="reveal">
+          <p class="eyebrow mb-3">支援の流れ</p>
+          <h2 class="mb-8 text-[clamp(1.8rem,4vw,3.2rem)]">相談から、体験、実践、次の一歩まで。</h2>
+          <div class="space-y-5">
+            <div class="flex gap-4"><span class="step-dot">1</span><div><h3 class="text-xl">相談</h3><p>本人や家族、支援者のお話を聞き、困りごとと希望を整理します。</p></div></div>
+            <div class="flex gap-4"><span class="step-dot">2</span><div><h3 class="text-xl">AI適性診断・体験</h3><p>簡単な入力、会話、画像作成、書類づくりなどを試し、合いそうな使い方を探します。</p></div></div>
+            <div class="flex gap-4"><span class="step-dot">3</span><div><h3 class="text-xl">講座・実践ワーク</h3><p>Ashuraを使いながら、仕事に近い作業を小さく分けて練習します。</p></div></div>
+            <div class="flex gap-4"><span class="step-dot">4</span><div><h3 class="text-xl">就労・自立支援</h3><p>支援機関や企業との連携を視野に入れ、本人に合う次の選択肢を一緒に考えます。</p></div></div>
+          </div>
+        </div>
+        <img class="reveal rounded-[8px] shadow-2xl" src="images/renewal-2026/support-flow.png" alt="相談から就労支援までの流れをイヌえもんと参加者が歩むイラスト">
       </div>
-      <div class="card" style="background: linear-gradient(135deg, #fff, #fff9f3);">
-        <h3>📈 3年後の展望</h3>
-        <ul style="list-style: none; padding: 0;">
-          <li>→ 支援対象者 500名</li>
-          <li>→ 就労・復学率 65%</li>
-          <li>→ 連携団体 35団体</li>
-          <li>→ 秋田市全域展開</li>
-        </ul>
-      </div>
-      <div class="card" style="background: linear-gradient(135deg, #fff, #fef6ed);">
-        <h3>🌟 地域への効果</h3>
-        <ul style="list-style: none; padding: 0;">
-          <li>◆ 社会保障費の削減</li>
-          <li>◆ 地域経済の活性化</li>
-          <li>◆ 共生社会の実現</li>
-          <li>◆ 若者の定着促進</li>
-        </ul>
-      </div>
-    </div>
-    </div>
-  </section>
+    </section>
 
-  <footer id="contact">
-    <div class="footer-content">
-      <div class="footer-links" style="text-align: center; margin-bottom: 2rem;">
-        <a href="privacy.html" style="color: white; text-decoration: none; margin: 0 1rem; opacity: 0.8;">個人情報保護方針</a>
-        <a href="terms.html" style="color: white; text-decoration: none; margin: 0 1rem; opacity: 0.8;">利用規約</a>
-        <a href="tokusho.html" style="color: white; text-decoration: none; margin: 0 1rem; opacity: 0.8;">特定商取引法に基づく表記</a>
+    <section id="voices" class="section">
+      <div class="container-wide">
+        <div class="mb-10 max-w-3xl reveal">
+          <p class="eyebrow mb-3">利用者・連携先の声</p>
+          <h2 class="text-[clamp(1.8rem,4vw,3.2rem)]">AIを使うことで、作業の入口が少し近くなる。</h2>
+        </div>
+        <div class="grid gap-5 lg:grid-cols-3">
+          <blockquote class="soft-card reveal p-6">
+            <p class="mb-5">「文章を考えるのが苦手でしたが、AIに下書きを手伝ってもらうと、支援員さんと一緒に直しながら提出用の文章まで進められました。」</p>
+            <cite class="not-italic font-bold text-[#1B4D6B]">Aさん（20代・障害者就労支援利用者）</cite>
+          </blockquote>
+          <blockquote class="soft-card reveal p-6">
+            <p class="mb-5">「学校の話をいきなりするのではなく、好きな画像づくりから始められたので、久しぶりに学ぶ時間を持てました。」</p>
+            <cite class="not-italic font-bold text-[#1B4D6B]">Bさん（10代・学習支援利用者）</cite>
+          </blockquote>
+          <blockquote class="soft-card reveal p-6">
+            <p class="mb-5">「SNSの投稿案やチラシのたたき台をAIで作る練習は、福祉現場でも取り入れやすいと感じました。職員研修にもつなげたいです。」</p>
+            <cite class="not-italic font-bold text-[#1B4D6B]">Cさん（地域の就労支援関係者）</cite>
+          </blockquote>
+        </div>
       </div>
-      
-      <p style="opacity: 0.8;">&copy; 2025 if(AI) - 秋田市から始まる、新しい支援の形</p>
+    </section>
+
+    <section id="partners" class="section partner-band">
+      <div class="container-wide">
+        <div class="max-w-3xl reveal">
+          <p class="mb-3 text-sm font-black text-[#ffd887]">パートナー・連携団体</p>
+          <h2 class="mb-5 text-[clamp(1.8rem,4vw,3.2rem)]">秋田県内の福祉・就労支援ネットワークと、できることを重ねていきます。</h2>
+          <p class="text-white/90">各団体の活動を尊重しながら、AI活用の体験機会、学習支援、就労に向けた実践の場づくりで連携を検討・推進します。</p>
+        </div>
+        <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div class="partner-card reveal p-5"><h3 class="text-xl">naoの卵</h3><p class="mt-2 text-sm text-white/86">地域の支援ネットワークの一員として連携。</p></div>
+          <div class="partner-card reveal p-5"><h3 class="text-xl">esocialQ</h3><p class="mt-2 text-sm text-white/86">福祉・就労支援の現場知見を尊重した協力。</p></div>
+          <div class="partner-card reveal p-5"><h3 class="text-xl">ライフデザインラボ</h3><p class="mt-2 text-sm text-white/86">暮らしと働く選択肢を広げる文脈で連携。</p></div>
+          <div class="partner-card reveal p-5"><h3 class="text-xl">BarrierFree</h3><p class="mt-2 text-sm text-white/86">アクセシビリティを意識した地域連携。</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section bg-white/65">
+      <div class="container-wide grid gap-10 lg:grid-cols-[.8fr_1.2fr]">
+        <div class="reveal">
+          <p class="eyebrow mb-3">法人情報</p>
+          <h2 class="text-[clamp(1.8rem,4vw,3.2rem)]">特定非営利活動法人if(AI)について</h2>
+        </div>
+        <div class="soft-card reveal p-6 md:p-8">
+          <dl class="grid gap-5">
+            <div><dt class="font-black text-[#1B4D6B]">法人名</dt><dd>特定非営利活動法人if(AI)（旧名称：特定非営利活動法人アイアンドユウ）</dd></div>
+            <div><dt class="font-black text-[#1B4D6B]">目的</dt><dd>不登校・ひきこもりの子どもたち、精神障害・発達障害等を有する若年層及び障害者、キャリア形成やIT・AI等の習得に不安を抱える方に対して、AI技術を活用した就労支援及び教育訓練、職業能力開発、リスキリング支援等を行い、福祉の増進及び職業能力の開発、社会全体の利益の増進に寄与することを目的とします。</dd></div>
+            <div><dt class="font-black text-[#1B4D6B]">所在地</dt><dd>秋田県秋田市上北手荒巻字堺切24番地2 秋田県ゆとり生活創造センター「遊学舎」内</dd></div>
+            <div><dt class="font-black text-[#1B4D6B]">代表理事</dt><dd>高崎翔太</dd></div>
+            <div><dt class="font-black text-[#1B4D6B]">情報公開について</dt><dd>本ページは、団体概要、事業活動、連携・相談窓口を確認いただくための情報公開ページとしても運用します。助成金申請、連携相談、見学希望の際に参照できるよう、内容を随時整えていきます。</dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section">
+      <div class="container-wide">
+        <div class="glass reveal rounded-[8px] p-8 text-center md:p-12">
+          <p class="eyebrow mb-3">お問い合わせ・応募</p>
+          <h2 class="mx-auto mb-5 max-w-3xl text-[clamp(1.8rem,4vw,3.2rem)]">AIを使った学びや働く練習を、まずは見学・相談から。</h2>
+          <p class="mx-auto mb-8 max-w-3xl text-lg">ご本人、ご家族、支援機関、企業・行政・助成団体の方からの相談を受け付けています。具体的な状況がまとまっていなくてもかまいません。</p>
+          <div class="flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <a href="mailto:takasaki19841121@gmail.com" class="btn-primary" aria-label="メールで無料相談・見学を申し込む">無料相談・見学を申し込む</a>
+            <p class="font-bold text-[#1B4D6B]">E-mail: <a class="underline decoration-[#F2A93B] decoration-2 underline-offset-4" href="mailto:takasaki19841121@gmail.com">takasaki19841121@gmail.com</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-[#1B4D6B]/15 bg-[#12364b] py-10 text-white">
+    <div class="container-wide flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+      <p>© 2026 特定非営利活動法人if(AI). All rights reserved.</p>
+      <div class="flex flex-wrap gap-4 text-sm font-bold text-white/86">
+        <a href="terms.html" aria-label="利用規約">利用規約</a>
+        <a href="privacy.html" aria-label="個人情報保護方針">個人情報保護方針</a>
+        <a href="tokusho.html" aria-label="特定商取引法に基づく表記">特定商取引法に基づく表記</a>
+      </div>
     </div>
   </footer>
 
-  <div class="floating-action" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
-    ↑
-  </div>
-
   <script>
-    // Smooth scroll for navigation links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const header = document.querySelector("header");
+    const links = document.querySelectorAll('a[href^="#"]');
+
+    links.forEach((link) => {
+      link.addEventListener("click", (event) => {
+        const id = link.getAttribute("href");
+        if (!id || id === "#") return;
+        const target = document.querySelector(id);
+        if (!target) return;
+        event.preventDefault();
+        const offset = header ? header.offsetHeight + 16 : 0;
+        const top = target.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top, behavior: "smooth" });
+      });
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
         }
       });
-    });
+    }, { threshold: 0.14 });
 
-    // Hamburger menu toggle
-    function toggleMenu() {
-      const hamburger = document.querySelector('.hamburger');
-      const navContainer = document.getElementById('navContainer');
-      
-      hamburger.classList.toggle('active');
-      navContainer.classList.toggle('active');
-    }
-
-    function closeMenu() {
-      const hamburger = document.querySelector('.hamburger');
-      const navContainer = document.getElementById('navContainer');
-      
-      hamburger.classList.remove('active');
-      navContainer.classList.remove('active');
-    }
-
-    // Animated counter
-    const animateCounters = () => {
-      const counters = document.querySelectorAll('.stat-number');
-      
-      counters.forEach(counter => {
-        const target = parseInt(counter.getAttribute('data-target'));
-        const duration = 2000;
-        const step = target / (duration / 16);
-        let current = 0;
-        
-        const updateCounter = () => {
-          current += step;
-          if (current < target) {
-            counter.textContent = Math.floor(current);
-            requestAnimationFrame(updateCounter);
-          } else {
-            counter.textContent = target;
-          }
-        };
-        
-        // Start animation when element is visible
-        const counterObserver = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting && counter.textContent === '0') {
-              updateCounter();
-              counterObserver.unobserve(entry.target);
-            }
-          });
-        });
-        
-        counterObserver.observe(counter);
-      });
-    };
-
-    animateCounters();
-
-    // Testimonial carousel with background switching
-    let currentSlideIndex = 1;
-    const slides = document.querySelectorAll('.testimonial-slide');
-    const dots = document.querySelectorAll('.dot');
-    const voicesSection = document.getElementById('voices');
-    
-    // Background images for each case
-    const backgroundImages = {
-      pc: [
-        "url('images/casepc1.png')",
-        "url('images/casepc3.png')",
-        "url('images/casepc2.png')"
-      ],
-      sp: [
-        "url('images/casesp1.png')",
-        "url('images/casesp3.png')",
-        "url('images/casesp2.png')"
-      ]
-    };
-
-    function currentSlide(n) {
-      showSlide(currentSlideIndex = n);
-    }
-
-    function showSlide(n) {
-      if (n > slides.length) currentSlideIndex = 1;
-      if (n < 1) currentSlideIndex = slides.length;
-      
-      slides.forEach(slide => {
-        slide.classList.remove('active');
-      });
-      
-      dots.forEach(dot => {
-        dot.classList.remove('active');
-      });
-      
-      slides[currentSlideIndex - 1].classList.add('active');
-      dots[currentSlideIndex - 1].classList.add('active');
-      
-      // Change background image based on current slide and screen size
-      const isMobile = window.innerWidth <= 768;
-      const imageSet = isMobile ? backgroundImages.sp : backgroundImages.pc;
-      const newBackground = imageSet[currentSlideIndex - 1];
-      
-      if (voicesSection) {
-        voicesSection.style.backgroundImage = newBackground;
-      }
-    }
-
-    // Auto-advance carousel
-    setInterval(() => {
-      currentSlideIndex++;
-      showSlide(currentSlideIndex);
-    }, 5000);
-    
-    // Handle window resize to update background images
-    window.addEventListener('resize', () => {
-      showSlide(currentSlideIndex);
-    });
-
-    // Removed parallax effect for simpler structure
+    document.querySelectorAll(".reveal").forEach((element) => observer.observe(element));
   </script>
 </body>
 </html>
