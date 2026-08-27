@@ -1,0 +1,14 @@
+# 公開不要なファイルはデプロイに含めない
+WorkFlow_origin
+.github
+.claude.md
+README.md
+*.md
+*.docx
+*.pdf
+*.xlsx
+*.csv
+*.py
+package.json
+package-lock.json
+next.config.mjs
